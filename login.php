@@ -4,7 +4,7 @@ require_once "conexion.php";
 
 $mensaje = "";
 
-// Redireccionar si ya inició sesión
+
 if (isset($_SESSION['usuario'])) {
     header("Location: dashboard.php");
     exit;
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($usuario !== '' && $password !== '') {
         try {
-            // Permitir loguearse tanto con el nombre de usuario como con el email
+            
             $stmt = $pdo->prepare("SELECT id, usuario, password FROM usuarios WHERE usuario = :usuario OR email = :usuario");
             $stmt->execute([':usuario' => $usuario]);
             $user_row = $stmt->fetch(PDO::FETCH_ASSOC);

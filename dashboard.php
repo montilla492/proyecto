@@ -2,7 +2,7 @@
 require_once "init.php";
 require_once "conexion.php";
 
-// Redirigir si no hay sesión activa
+
 if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit;
@@ -27,19 +27,19 @@ if (isset($_POST['eliminar_obra'])) {
     $obra_id = $_POST['id'] ?? '';
     if ($obra_id !== '') {
         try {
-            // Obtener la ruta del archivo para borrarlo del servidor físicamente
+            
             $stmt = $pdo->prepare("SELECT archivo_url FROM obras WHERE id = :id AND usuario_id = :uid");
             $stmt->execute([':id' => $obra_id, ':uid' => $session_id_usuario]);
             $obra = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($obra && !empty($obra['archivo_url']) && file_exists($obra['archivo_url'])) {
-                // No borrar imágenes del sistema por defecto (como las de prueba iniciales)
+               
                 if (strpos($obra['archivo_url'], 'img/fotofut') === false && strpos($obra['archivo_url'], 'img/glasses') === false && strpos($obra['archivo_url'], 'img/relatos') === false) {
                     unlink($obra['archivo_url']);
                 }
             }
 
-            // Eliminar de la base de datos
+            
             $stmt = $pdo->prepare("DELETE FROM obras WHERE id = :id AND usuario_id = :uid");
             $stmt->execute([':id' => $obra_id, ':uid' => $session_id_usuario]);
 
@@ -82,7 +82,7 @@ if (isset($_POST['guardar_obra'])) {
             $sql = "INSERT INTO obras (usuario_id, titulo, descripcion, tipo, archivo_url, contenido_relato, etiquetas, anio_proyectado) 
                     VALUES (:usuario_id, :titulo, :descripcion, :tipo, :archivo_url, :contenido_relato, :etiquetas, :anio_proyectado)";
             
-            // Si es un relato, podemos usar una imagen por defecto
+            
             if ($tipo == 'relato' && empty($archivo_db_path)) {
                 $archivo_db_path = 'img/relatos.png';
             }
@@ -107,7 +107,7 @@ if (isset($_POST['guardar_obra'])) {
         // Editar obra existente
         try {
             if ($archivo_db_path) {
-                // Borrar archivo anterior si existe uno nuevo
+                
                 $stmt = $pdo->prepare("SELECT archivo_url FROM obras WHERE id = :id AND usuario_id = :uid");
                 $stmt->execute([':id' => $obra_id, ':uid' => $session_id_usuario]);
                 $vieja_obra = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -304,14 +304,12 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel de Control - Futuros Compartidos</title>
 
-  <!-- Bootstrap 5 y Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
   
-  <!-- Fuentes del proyecto -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Syne:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   
-  <!-- Estilos globales del proyecto -->
+ 
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -350,7 +348,7 @@ try {
   <!-- Banner de perfil -->
   <section class="container mt-4">
     <div class="fc-db-banner" style="background: linear-gradient(rgba(10, 10, 20, 0.2), rgba(10, 10, 20, 0.95)), url('<?php echo htmlspecialchars($perfil_usuario['banner_url']); ?>') center/cover no-repeat;">
-      <!-- Botón de ajustes -->
+      
       <button class="fc-icon-btn fc-db-banner-settings" onclick="activateTab('ajustes-tab')" title="Ajustes de Perfil">
         <i class="bi bi-gear-fill"></i>
       </button>
@@ -372,7 +370,7 @@ try {
   <!-- Contenido principal -->
   <main class="container fc-db-content-wrapper">
     
-    <!-- Notificaciones de éxito o error -->
+   
     <?php if ($mensaje_exito != ""): ?>
         <div class="alert alert-success alert-dismissible fade show border-0 mb-4 py-3" style="background: rgba(16, 185, 129, 0.15); color: #10B981; border-radius: var(--fc-radius);" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i> <?php echo htmlspecialchars($mensaje_exito); ?>
@@ -387,7 +385,7 @@ try {
         </div>
     <?php endif; ?>
     
-    <!-- 1. BLOQUE DE ESTADÍSTICAS RÁPIDAS (Figma layout) -->
+    <!-- 1. BLOQUE  -->
     <div class="row g-4 mb-5">
       <div class="col-md-4">
         <div class="fc-db-stat-card">
@@ -447,7 +445,7 @@ try {
                 </button>
               </div>
 
-              <!-- Pestañas Figma-Style: Imagenes, Videos, Relatos -->
+              <!-- Pestañas: Imagenes, Videos, Relatos -->
               <ul class="nav fc-db-subtabs" id="gallerySubtabs" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button class="fc-db-subtab-btn active" id="subtab-img-btn" data-bs-toggle="tab" data-bs-target="#subtab-img" type="button" role="tab" aria-controls="subtab-img" aria-selected="true">

@@ -14,7 +14,7 @@ if ($logged_in) {
             $avatar_url = $user_nav['avatar_url'];
         }
     } catch (PDOException $e) {
-        // Ignorar silenciosamente en el nav
+        
     }
 }
 ?>

@@ -8,11 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($obra_id > 0) {
         try {
-            // Incrementar likes de la obra
+            //likes 
             $stmt = $pdo->prepare("UPDATE obras SET likes = likes + 1 WHERE id = :id");
             $stmt->execute([':id' => $obra_id]);
             
-            // Obtener el número actualizado de likes
+            
             $stmt_likes = $pdo->prepare("SELECT likes FROM obras WHERE id = :id");
             $stmt_likes->execute([':id' => $obra_id]);
             $res = $stmt_likes->fetch(PDO::FETCH_ASSOC);

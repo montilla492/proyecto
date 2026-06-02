@@ -41,7 +41,7 @@ if ($logged_in) {
             $avatar_url = $user_nav['avatar_url'];
         }
     } catch (PDOException $e) {
-        // Ignorar
+       
     }
 }
 ?>
@@ -58,7 +58,7 @@ if ($logged_in) {
 </head>
 <body>
 
-  <!-- Navbar -->
+  
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark fc-navbar">
       <div class="container">
@@ -94,7 +94,7 @@ if ($logged_in) {
     </nav>
   </header>
 
-  <!-- Detalle de la obra -->
+  
   <main class="fc-detail-main py-5">
     <div class="container">
       
@@ -106,7 +106,7 @@ if ($logged_in) {
 
       <div class="row g-5">
         
-        <!-- Multimedia -->
+        
         <div class="col-lg-7">
           <div class="fc-detail-media-card">
             <?php if ($obra['tipo'] === 'video'): ?>
@@ -134,7 +134,7 @@ if ($logged_in) {
           </div>
         </div>
 
-        <!-- Información -->
+        
         <div class="col-lg-5">
           <div class="fc-detail-info-card p-4 p-md-5 rounded-4" style="background: var(--fc-bg-2); border: 1px solid var(--fc-border);">
             
