@@ -128,3 +128,40 @@ function toggleUploadInputs() {
         }
     }
 }
+
+
+
+
+//para los Likes
+
+document.getElementById('likeBtn').addEventListener('click', function() {
+        const btn = this;
+        const obraId = btn.getAttribute('data-id');
+        
+        // Evitar doble clic
+        btn.disabled = true;
+        
+        fetch('like_obra.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id=' + obraId
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('likesCount').textContent = data.likes;
+                btn.innerHTML = '<i class="bi bi-heart-fill me-1"></i> ¡Liked!';
+                btn.classList.remove('btn-outline-danger');
+                btn.classList.add('btn-danger');
+            } else {
+                alert(data.error || 'Ocurrió un error');
+                btn.disabled = false;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            btn.disabled = false;
+        });
+    });
